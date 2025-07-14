@@ -18,10 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({children,}: Readonly<{ children: React.ReactNode;}>){
-      const token = (await cookies()).get("jwtToken")?.value;
-    if(!token) redirect("/")
-    const payload = verifyTokenForPage(token);
-    if(payload?.isAdmin===false) redirect("/")
+
   return (
     <html lang="en">
       <body className={`${inter.variable}`}>

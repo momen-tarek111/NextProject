@@ -2,10 +2,13 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { getAllComments } from '@/apiCalls/adminApiCalls'
 import DeleteCommentButton from "./DeleteCommentButton"
+import { verifyTokenForPage } from "@/utils/verifyToken"
 
 const AdminCommentsTable = async() => {
-      const token = (await cookies()).get("jwtToken")?.value;
-      if(!token) redirect("/")
+    const token = (await cookies()).get("jwtToken")?.value;
+    if(!token) redirect("/")
+    const payload = verifyTokenForPage(token);
+    if(payload?.isAdmin===false) redirect("/")
 
       const comments= await getAllComments(token)
       

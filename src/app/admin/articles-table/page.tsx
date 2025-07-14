@@ -5,12 +5,18 @@ import { ARTICLE_PER_PAGE } from "@/utils/constants"
 import Link from 'next/link'
 import DeleteArticleButton from './DeleteArticleButton'
 import prisma from '@/utils/db'
+import { redirect } from "next/navigation"
+import { cookies } from "next/headers"
+import { verifyTokenForPage } from "@/utils/verifyToken"
 // interface AdminArticleTableProps{
 //   searchParams:{ pageNumber: string }
 // }
 const AdminArticlesTable =async (props:unknown) => {
     const {pageNumber} =await (props as { searchParams: { pageNumber: string } }).searchParams;
-
+    const token = (await cookies()).get("jwtToken")?.value;
+    if(!token) redirect("/")
+    const payload = verifyTokenForPage(token);
+    if(payload?.isAdmin===false) redirect("/")
     const articles:Article[]=await getArticles(pageNumber)
     const count:number= await prisma.article.count()
     const pages=Math.ceil(count/ARTICLE_PER_PAGE)
