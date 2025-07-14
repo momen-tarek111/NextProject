@@ -5,6 +5,9 @@ import { ToastContainer } from 'react-toastify';
 import "./globals.css";
 import Header from "@/components/header/Header"
 import Footer from "@/components/footer";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { verifyTokenForPage } from "@/utils/verifyToken";
 
 
 const inter = Inter({variable:"--font-inter",subsets: ["latin"],})
@@ -14,7 +17,11 @@ export const metadata: Metadata = {
   description: "cloud hosting project",
 };
 
-export default function RootLayout({children,}: Readonly<{ children: React.ReactNode;}>){
+export default async function RootLayout({children,}: Readonly<{ children: React.ReactNode;}>){
+      const token = (await cookies()).get("jwtToken")?.value;
+    if(!token) redirect("/")
+    const payload = verifyTokenForPage(token);
+    if(payload?.isAdmin===false) redirect("/")
   return (
     <html lang="en">
       <body className={`${inter.variable}`}>

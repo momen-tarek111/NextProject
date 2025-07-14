@@ -1,7 +1,3 @@
-import React from 'react'
-import { redirect } from "next/navigation"
-import { cookies } from "next/headers"
-import { verifyTokenForPage } from "@/utils/verifyToken"
 import Pagination from "@/components/articles/Pagination"
 import { Article } from "@/generated/prisma"
 import { getArticles, getArticlesCount } from "@/apiCalls/apiArticlesCalls"
@@ -14,10 +10,7 @@ import prisma from '@/utils/db'
 // }
 const AdminArticlesTable =async (props:unknown) => {
     const {pageNumber} =await (props as { searchParams: { pageNumber: string } }).searchParams;
-    const token = (await cookies()).get("jwtToken")?.value;
-    if(!token) redirect("/")
-    const payload = verifyTokenForPage(token);
-    if(payload?.isAdmin===false) redirect("/")
+
     const articles:Article[]=await getArticles(pageNumber)
     const count:number= await prisma.article.count()
     const pages=Math.ceil(count/ARTICLE_PER_PAGE)
