@@ -22,9 +22,7 @@ export async function DELETE(request: NextRequest, props: unknown) {
         const userFromToken = verifyToken(request);
 
         if (userFromToken!==null&&userFromToken.id === user.id) {
-            const commentsIds=user.comment.map(o=>o.id)
             await prisma.user.delete({ where: { id: user.id } })
-            await prisma.comment.deleteMany({where:{id:{in:commentsIds}}})
             return NextResponse.json(
                 { message: 'your profile (account) has been deleted' },
                 { status: 200 }

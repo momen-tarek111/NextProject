@@ -98,9 +98,9 @@ export async function DELETE(request: NextRequest, props: unknown) {
         if (!article) {
             return NextResponse.json({ message: "article not found" }, { status: 404 });
         }
-        const commentsIds:number[]=article.comments.map(i=>i.id);
+
         await prisma.article.delete({ where: { id: article.id } })
-        await prisma.comment.deleteMany({where:{id:{in:commentsIds}}})
+
         return NextResponse.json({ message: "article deleted" }, { status: 200 });
     } catch (error) {
         return NextResponse.json(
