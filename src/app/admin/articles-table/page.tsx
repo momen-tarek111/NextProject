@@ -1,6 +1,6 @@
 import Pagination from "@/components/articles/Pagination"
 import { Article } from "@/generated/prisma"
-import { getArticles, getArticlesCount } from "@/apiCalls/apiArticlesCalls"
+import { getArticles } from "@/apiCalls/apiArticlesCalls"
 import { ARTICLE_PER_PAGE } from "@/utils/constants"
 import Link from 'next/link'
 import DeleteArticleButton from './DeleteArticleButton'

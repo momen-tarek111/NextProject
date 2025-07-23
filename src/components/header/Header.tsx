@@ -4,6 +4,7 @@ import Navbar from "./Navbar"
 import { cookies } from "next/headers"
 import { verifyTokenForPage } from "@/utils/verifyToken"
 import LogoutButton from './LogoutButton';
+import { DOMAIN } from "@/utils/constants"
 const Header =async () => {
   const token = (await cookies()).get("jwtToken")?.value || "";
   const payload = verifyTokenForPage(token);
@@ -13,7 +14,7 @@ const Header =async () => {
         <div className={styles.right}>
             {payload ? (
               <>
-                <strong className="text-blue-800 md:text-xl capitalize">{payload?.username}</strong>
+                <Link href={`${DOMAIN}/profile/${payload.id}`} className="text-blue-800 md:text-xl capitalize font-bold">{payload?.username}</Link>
                  <LogoutButton />
               </>
               ) : (

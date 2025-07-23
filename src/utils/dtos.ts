@@ -20,7 +20,6 @@ export interface LoginUserDto {
 export interface UpdateUserDto{
     username?: string;
     email?: string;
-    password?: string;
 }
 export interface CreateCommentDto{
     text:string,

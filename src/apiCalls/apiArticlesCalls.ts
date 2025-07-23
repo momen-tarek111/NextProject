@@ -1,18 +1,25 @@
-import { Article } from "@/generated/prisma";
+import { Article, User } from "@/generated/prisma";
 import { DOMAIN } from "@/utils/constants";
 import { SingleArticle } from "@/utils/types";
 import { redirect } from "next/navigation";
+
 
 export async function getArticles(pageNumber:string|undefined):Promise<Article[]>{
 
     const response=await fetch(`${DOMAIN}/api/articles?pageNumber=${pageNumber}`,{cache:'no-store'})
       if (!response.ok) {
-     redirect("/not-found")
-  }
+      redirect("/not-found")
+      }
 
   return response.json();
 }
-
+export async function getUser(token:string,id:string):Promise<User>{
+  const response =await fetch(`${DOMAIN}/api/users/profile/${id}`,{headers:{Cookie:`jwtToken=${token}`}})
+  if (!response.ok) {
+     redirect("/not-found")
+  }
+  return response.json();
+}
 export async function getArticlesCount():Promise<number>{
 
     const response=await fetch(`${DOMAIN}/api/articles/count`)

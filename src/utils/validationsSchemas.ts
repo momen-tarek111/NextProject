@@ -30,8 +30,7 @@ export const updateUserSchema =z.object({
         required_error:"userName is required",invalid_type_error:"userName must be string"}).min(2,"userName must be more than two characters").max(100,"userName must be less than 100 characters").optional(),
     email:z.string({
         required_error:"email is required",invalid_type_error:"email must be string"}).min(2,"email must be more than two characters").max(200,"email must be less than 200 characters").email().optional(),
-    password:z.string({
-        required_error:"password is required",invalid_type_error:"password must be string"}).min(6,"password must be more than 5 characters").optional()
+    
 })
 export const createCommentShema = z.object({
     text: z.string({
