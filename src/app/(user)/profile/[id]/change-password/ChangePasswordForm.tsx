@@ -52,13 +52,13 @@ const ChangePasswordForm = ({ user }: EditProfileFormProps) => {
       <input
         className="mb-4 border rounded p-2 text-xl"
         type="password"
-        placeholder="Enter Your New Password"
+        placeholder="Enter New Password"
         onChange={(c) => setNewPassword(c.target.value)}
       />
       <input
         className="mb-4 border rounded p-2 text-xl"
         type="password"
-        placeholder="Enter Your Confirm New Password"
+        placeholder="Enter Confirm New Password"
         onChange={(c) => setConfirmNewPassword(c.target.value)}
       />
       <button disabled={loading} type="submit" className="text-2xl text-white bg-blue-800 p-2 rounded-lg font-bold">
