@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyToken } from "@/utils/verifyToken";
 import { UpdateUserDto } from "@/utils/dtos";
 import { updateUserSchema } from "@/utils/validationsSchemas";
+import { setCookie } from "@/utils/generateToken";
 /**
  *  @method  DELETE
  *  @route   ~/api/users/profile/:id
@@ -58,7 +59,8 @@ export async function GET(request: NextRequest, props: unknown) {
             id:true,
             username:true,
             email:true,
-            createAt:true
+            createAt:true,
+            password:true,
         }
         })
         if (!user) {
@@ -73,6 +75,7 @@ export async function GET(request: NextRequest, props: unknown) {
             { status: 403 }
         )
         }
+        console.log({user})
     return NextResponse.json(user, { status: 200 });
 
     } catch (error) {
@@ -91,7 +94,7 @@ export async function GET(request: NextRequest, props: unknown) {
  */
 export async function PUT(request: NextRequest, props: unknown) {
     try {
-        const { id } = (props as { params: { id: string } }).params;
+        const { id } =await (props as { params: { id: string } }).params;
 
         const user = await prisma.user.findUnique({ where: { id: parseInt(id) } })
         if (!user) {
@@ -118,10 +121,16 @@ const updatedUser = await prisma.user.update({
             data: {
                 username: body.username,
                 email: body.email,
+                updateAt:new Date()
             }
         });
+        const cookie=setCookie({
+            username:updatedUser.username,
+            id:updatedUser.id,
+            isAdmin:updatedUser.isAdmin
+        })
         const {password,...other}=updatedUser
-        return NextResponse.json({ ...other }, { status: 200 });
+        return NextResponse.json({ ...other }, { status: 200 ,headers:{"Set-Cookie":cookie}});
 
     } catch (error) {
         return NextResponse.json(

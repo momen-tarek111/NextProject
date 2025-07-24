@@ -29,3 +29,6 @@ export interface UpdateCommentDto{
     text:string
     
 }
+export interface ChangePasswordDto{
+    newPassword:string
+}

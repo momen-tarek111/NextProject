@@ -25,7 +25,7 @@ const profile =async (props:unknown) => {
                         <Link href={`${DOMAIN}/profile/${id}/edit-profile`} className="rounded-lg h-12 lg:px-2 px-1 lg:text-lg text-white bg-green-600 hover:bg-green-900 transition flex items-center gap-2">
                             <AiFillEdit className="text-xl text-center"/> Edit My Profile
                         </Link>
-                        <Link href={`${DOMAIN}/profile/${id}/reset-password`} className="rounded-lg h-12 lg:px-2 px-1 lg:text-lg text-white bg-blue-600 hover:bg-blue-900 transition flex items-center gap-2">
+                        <Link href={`${DOMAIN}/profile/${id}/change-password`} className="rounded-lg h-12 lg:px-2 px-1 lg:text-lg text-white bg-blue-600 hover:bg-blue-900 transition flex items-center gap-2">
                             <FaUnlock className="text-xl text-center"/> Change Password
                         </Link>
                         <DeleteUserButton id={id}/>

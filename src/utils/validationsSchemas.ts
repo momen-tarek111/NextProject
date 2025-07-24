@@ -41,3 +41,8 @@ export const UpdateCommentShema = z.object({
     text: z.string({
         required_error:"text is required",invalid_type_error:"text must be string"}).min(2,"text must be more than two characters").max(500,"text must be less than 500 characters")
 });
+
+export const ChangePasswordSchema = z.object({
+    newPassword: z.string({
+        required_error:"new password is required",invalid_type_error:"new password must be string"}).min(2,"new password must be more than two characters").max(500,"new password must be less than 500 characters")
+});
